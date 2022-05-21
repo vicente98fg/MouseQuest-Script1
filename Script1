@@ -1,0 +1,91 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Animation2Character : MonoBehaviour
+{
+    // WILFRED ANIMATIONS
+
+    // Ally Characters
+    [SerializeField] GameObject character1;
+    [SerializeField] GameObject character2;
+    [SerializeField] GameObject character3; 
+
+    Characters characterStats1;
+    Characters characterStats2;
+    Characters characterStats3;
+
+    // GUI
+    public GameObject GUI1;
+    public GameObject GUI2;
+    public GameObject GUI3;
+    public Animator anim;
+
+    public GameObject damageCanvas;
+
+    // Enemy
+    [SerializeField] GameObject enemy;
+    Enemy1Controller enemyTurn;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        characterStats1 = character1.GetComponent<Characters>();
+        characterStats2 = character2.GetComponent<Characters>();
+        characterStats3 = character3.GetComponent<Characters>();
+
+        anim = GetComponent<Animator>();
+        enemyTurn = enemy.GetComponent<Enemy1Controller>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    // Animation play when button is pressed
+    public void PlayAnimation() {
+        anim.SetBool("character2attack",true);
+        Cursor.visible = false;
+    }
+
+    public void PlaySpell1Animation() {
+        anim.SetBool("character2spell1",true);
+        Cursor.visible = false;
+    }
+
+    public void PlaySpell2Animation() {
+        anim.SetBool("character2spell2",true);
+        Cursor.visible = false;
+    }
+
+    public void PlayItemUseAnimation() {
+        anim.SetBool("character2useitem1",true);
+        Cursor.visible = false;
+    }
+
+    // GUI disappears
+    public void StartAnimation() {
+        GUI1.gameObject.SetActive(false);
+        GUI2.gameObject.SetActive(false);
+        GUI3.gameObject.SetActive(false);
+    }
+
+    // Damage number is shown
+    public void DamageAnimation() {
+        damageCanvas.gameObject.SetActive(true);
+    }
+
+    // GUI reappears and next turn is preceded 
+    public void FinishAnimation() {
+        Cursor.visible = true;
+        damageCanvas.gameObject.SetActive(false);
+        anim.SetBool("character2attack",false);
+        anim.SetBool("character2spell1",false);
+        anim.SetBool("character2spell2",false);
+        anim.SetBool("character2useitem1",false);
+        anim.Play("Idle_2");
+        enemyTurn.turn = true;
+
+    }
+}
